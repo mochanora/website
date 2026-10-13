@@ -420,7 +420,7 @@ footer img{height:18px;width:auto}
       </ul>
     </div>
     <div>
-      <form id="req" action="https://formsubmit.co/mo@chanora.co" method="POST" novalidate>
+      <form id="req" action="https://formsubmit.co/info@chanora.co" method="POST" novalidate>
         <input type="hidden" name="_subject" value="Chanora · nouvelle demande depuis le site">
         <input type="hidden" name="_template" value="table">
         <input type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px">
@@ -475,10 +475,18 @@ footer img{height:18px;width:auto}
     if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(m)){err.textContent=isEn?'Enter a valid email address.':'Indiquez une adresse e-mail valide.';return}
     var btn=f.querySelector('button[type=submit]'); btn.disabled=true;
     var data={}; new FormData(f).forEach(function(v,k){data[k]=v});
-    fetch('https://formsubmit.co/ajax/mo@chanora.co',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(data)})
-      .then(function(r){return r.json().then(function(j){if(!r.ok||String(j.success)!=='true')throw new Error(j.message||'error')})})
+    fetch('https://formsubmit.co/ajax/info@chanora.co',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(data)})
+      .then(function(r){return r.json().catch(function(){return {}}).then(function(j){if(!r.ok||String(j.success)!=='true'){var x=new Error('fail');x.detail=j.message||'';throw x}})})
       .then(function(){f.hidden=true;document.getElementById('f-done').hidden=false})
-      .catch(function(){btn.disabled=false;err.textContent=isEn?'The request could not be sent. Please try again, or email mo@chanora.co.':"La demande n'a pas pu être envoyée. Réessayez, ou écrivez à mo@chanora.co."});
+      .catch(function(x){
+        btn.disabled=false;
+        var d=(x&&x.detail)?String(x.detail):'';
+        if(/activat/i.test(d)){
+          err.textContent=isEn?'This form is not activated yet. Check the info@chanora.co inbox (and spam) for the FormSubmit activation email, click "Activate Form", then send again.':"Ce formulaire n'est pas encore activé. Cherchez l'e-mail d'activation FormSubmit dans la boîte info@chanora.co (et les spams), cliquez sur « Activate Form », puis renvoyez.";
+        } else {
+          err.textContent=(isEn?'The request could not be sent. Please try again, or email info@chanora.co.':"La demande n'a pas pu être envoyée. Réessayez, ou écrivez à info@chanora.co.")+(d?' ('+d+')':'');
+        }
+      });
   });
 })();
 </script>
