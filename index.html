@@ -1,0 +1,486 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chanora · Collecte et transformation de lait au Sénégal</title>
+<meta name="description" content="Chanora construit l'approvisionnement en lait du Sénégal à partir de la source : collecte, froid, transformation, et des éleveurs payés chaque semaine.">
+<meta property="og:title" content="Chanora · La force de la source">
+<meta property="og:description" content="Collecte, refroidissement et transformation de lait au Sénégal.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="img/rider.jpg">
+<meta name="theme-color" content="#123A5A">
+<link rel="icon" type="image/png" href="img/favicon.png">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap">
+<style>
+/* Layout: "Horizon" — warm source above a full-width ochre line, cold precise system below it; a logbook gutter carries time stamps. */
+:root{
+  --bleu:#123A5A; --bleu-deep:#0C2A43; --ocre:#D9822B; --vert:#4A7340; --glace:#9CC6DE;
+  --lait:#F6F1E6; --lait-2:#ECE4D2; --charbon:#1E2226; --muted:#555c63; --rule:rgba(18,58,90,.18);
+  --on-bleu:#F6F1E6; --on-bleu-muted:#B9CCDB;
+  --display:"Archivo", "Arial Narrow", Arial, sans-serif;
+  --body:"Inter", Arial, Helvetica, sans-serif;
+  --gutter:clamp(16px,4vw,56px);
+  --max:1240px;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--lait);color:var(--charbon);font-family:var(--body);font-size:17px;line-height:1.6;font-variant-numeric:tabular-nums;-webkit-font-smoothing:antialiased}
+body.en [lang="fr"]{display:none!important}
+body:not(.en) [lang="en"]{display:none!important}
+img{max-width:100%;display:block}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--ocre);outline-offset:3px}
+.wrap{max-width:var(--max);margin:0 auto;padding-inline:var(--gutter)}
+h1,h2,h3{font-family:var(--display);margin:0;text-wrap:balance;letter-spacing:-0.01em}
+h2{font-size:clamp(30px,4.2vw,52px);line-height:1.05;font-weight:800;color:var(--bleu)}
+h3{font-size:21px;font-weight:700;line-height:1.25;color:var(--bleu)}
+p{margin:0}
+.label{font-family:var(--body);font-weight:600;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--ocre)}
+.lede{font-size:clamp(18px,1.7vw,21px);line-height:1.55;color:var(--charbon);max-width:38ch}
+.muted{color:var(--muted)}
+.concept{font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+
+/* header */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bleu);color:var(--on-bleu)}
+.top .wrap{display:flex;align-items:center;gap:24px;min-height:64px;flex-wrap:wrap;padding-block:10px}
+.top .logo img{height:22px;width:auto}
+.top nav{display:flex;gap:22px;margin-left:auto;flex-wrap:wrap}
+.top nav a{text-decoration:none;font-size:14px;color:var(--on-bleu-muted)}
+.top nav a:hover{color:var(--on-bleu)}
+.lang{display:flex;border:1px solid rgba(246,241,230,.35)}
+.lang button{background:none;border:0;color:var(--on-bleu-muted);font:600 12px var(--body);letter-spacing:.1em;padding:6px 10px;cursor:pointer}
+.lang button[aria-pressed="true"]{background:var(--on-bleu);color:var(--bleu)}
+.btn{display:inline-flex;align-items:center;gap:10px;background:var(--ocre);color:var(--charbon);font:600 15px var(--body);padding:13px 20px;text-decoration:none;border:0;cursor:pointer}
+.btn:hover{background:#e2903d}
+.btn.small{font-size:13px;padding:9px 14px}
+@media (max-width:860px){.top nav{display:none}}
+
+/* hero */
+.hero{position:relative;background:var(--bleu-deep);color:var(--on-bleu);overflow:hidden}
+.hero .photo{position:absolute;inset:0;background:url(img/rider.jpg) center 40%/cover}
+.hero .photo::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(12,42,67,.88) 0%,rgba(12,42,67,.55) 45%,rgba(12,42,67,.05) 75%)}
+.hero .inner{position:relative;padding-block:clamp(72px,11vw,150px) clamp(40px,6vw,72px)}
+.hero .horizon{height:2px;background:var(--ocre);margin:28px 0 22px;position:relative}
+.hero h1{font-size:clamp(46px,8.4vw,112px);font-weight:800;line-height:.95;color:var(--on-bleu);max-width:9ch}
+.hero .sub{font-size:clamp(18px,1.8vw,22px);max-width:34ch;color:var(--on-bleu)}
+.hero .actions{display:flex;gap:18px;align-items:center;flex-wrap:wrap;margin-top:28px}
+.hero .ghost{color:var(--on-bleu);font-size:15px;text-underline-offset:4px}
+.hero .sun{width:clamp(64px,7vw,92px);height:auto;margin-bottom:6px}
+.hero .sun .rise{animation:rise 1.8s cubic-bezier(.2,.7,.2,1) both}
+.hero .sun .band{animation:band .5s ease-out both}
+.hero .sun .b2{animation-delay:1.4s}.hero .sun .b3{animation-delay:1.55s}.hero .sun .b1{animation-delay:1.25s}
+@keyframes rise{from{transform:translateY(22px)}to{transform:none}}
+@keyframes band{from{transform:scaleX(.2);opacity:.3}to{transform:none;opacity:1}}
+.hero .sun .band{transform-box:fill-box;transform-origin:center}
+@media (prefers-reduced-motion:reduce){.hero .sun .rise,.hero .sun .band{animation:none}}
+.hero .caption{position:absolute;right:var(--gutter);bottom:14px;color:rgba(246,241,230,.75)}
+
+/* gap */
+.gap{padding-block:clamp(64px,8vw,110px)}
+.gap .head{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:40px;align-items:end}
+.figs{margin-top:56px;border-top:2px solid var(--ocre);display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}
+.fig{padding:26px 28px 0 0;border-right:1px solid var(--rule)}
+.fig+.fig{padding-left:28px}
+.fig:last-child{border-right:0}
+.fig .n{font-family:var(--display);font-weight:800;font-size:clamp(44px,5.6vw,76px);line-height:1;color:var(--bleu);letter-spacing:-0.02em}
+.fig .n small{font-size:.42em;font-weight:700;letter-spacing:0}
+.fig p{margin-top:12px;max-width:28ch}
+.fig .src{margin-top:12px;font-size:12px;color:var(--muted)}
+@media (max-width:860px){.gap .head{grid-template-columns:1fr}.figs{grid-template-columns:1fr}.fig,.fig+.fig{padding:22px 0;border-right:0;border-bottom:1px solid var(--rule)}}
+
+/* day of milk */
+.day{background:linear-gradient(180deg,var(--lait) 0%,var(--lait-2) 35%,#DCE7EC 80%,#cfe0ea 100%);padding-block:clamp(64px,8vw,110px)}
+.day .intro{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:40px;align-items:end;margin-bottom:56px}
+.log{border-top:1px solid var(--bleu)}
+.step{display:grid;grid-template-columns:150px minmax(0,4fr) minmax(0,6fr);gap:32px;padding-block:34px;border-bottom:1px solid var(--rule);align-items:start}
+.step .t{font-family:var(--display);font-weight:800;font-size:28px;color:var(--bleu);line-height:1}
+.step .t span{display:block;margin-top:8px;font:600 11.5px var(--body);letter-spacing:.12em;text-transform:uppercase;color:var(--ocre)}
+.step .txt p{margin-top:10px;max-width:40ch}
+.step .reading{margin-top:16px;display:inline-block;font:600 12px var(--body);letter-spacing:.1em;text-transform:uppercase;color:var(--bleu);border:1px solid var(--bleu);padding:6px 10px}
+.step figure{margin:0}
+.step figure img{width:100%;aspect-ratio:16/10;object-fit:cover}
+.step figcaption{margin-top:8px}
+.sms{background:var(--bleu);color:var(--on-bleu);padding:22px;max-width:360px}
+.sms .from{font:600 12px var(--body);letter-spacing:.1em;text-transform:uppercase;color:var(--glace)}
+.sms p{margin-top:10px;font-size:16px}
+.sms .line{display:flex;justify-content:space-between;border-top:1px solid rgba(246,241,230,.2);padding-top:8px;margin-top:8px;font-size:14px;color:var(--on-bleu-muted)}
+.sms .line b{color:var(--on-bleu);font-weight:600}
+@media (max-width:860px){.day .intro{grid-template-columns:1fr}.step{grid-template-columns:1fr;gap:16px}}
+
+/* model */
+.model{background:var(--bleu);color:var(--on-bleu);padding-block:clamp(64px,8vw,110px)}
+.model h2{color:var(--on-bleu)}
+.model .lede{color:var(--on-bleu-muted)}
+.flow{margin-top:56px;display:grid;grid-template-columns:minmax(0,1fr) 56px minmax(0,1.3fr) 56px minmax(0,1fr);align-items:stretch}
+.node{border:1px solid rgba(246,241,230,.3);padding:24px}
+.node h3{color:var(--on-bleu)}
+.node p{margin-top:8px;color:var(--on-bleu-muted);font-size:15px}
+.node.core{background:var(--on-bleu);border-color:var(--on-bleu)}
+.node.core h3,.node.core li{color:var(--bleu)}
+.node.core ul{margin:12px 0 0;padding:0;list-style:none}
+.node.core li{padding:8px 0;border-top:1px solid var(--rule);font-size:15px}
+.node.core img{height:18px;width:auto;margin-bottom:6px}
+.arrow{display:flex;align-items:center;justify-content:center}
+.arrow svg{width:40px;height:16px}
+.stack{display:grid;gap:12px}
+.loop{margin-top:22px;display:flex;gap:16px;align-items:center;color:var(--on-bleu-muted);font-size:15px;border-top:1px solid rgba(246,241,230,.2);padding-top:18px}
+.loop b{color:var(--ocre);font-weight:600}
+@media (max-width:960px){.flow{grid-template-columns:1fr}.arrow{height:44px}.arrow svg{transform:rotate(90deg)}}
+
+/* plan */
+.plan{padding-block:clamp(64px,8vw,110px)}
+.phases{margin-top:56px;position:relative;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;border-top:2px solid var(--bleu)}
+.phase{padding:28px 28px 0 0;position:relative}
+.phase::before{content:"";position:absolute;top:-9px;left:0;width:16px;height:16px;border-radius:50%;background:var(--lait);border:2px solid var(--bleu)}
+.phase.now::before{background:var(--ocre);border-color:var(--ocre)}
+.phase .when{font:600 12px var(--body);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.phase.now .when{color:var(--ocre)}
+.phase h3{margin-top:8px}
+.phase ul{margin:12px 0 0;padding-left:18px}
+.phase li{margin-bottom:6px}
+.gallery{margin-top:72px;display:grid;grid-template-columns:2fr 1fr 1fr;gap:12px}
+.gallery figure{margin:0}
+.gallery img{width:100%;object-fit:cover;aspect-ratio:4/3}
+.gallery .wide img{aspect-ratio:auto;height:100%;min-height:100%}
+.gallery .wide{display:grid}
+@media (max-width:860px){.phases{grid-template-columns:1fr;border-top:0;border-left:2px solid var(--bleu)}.phase{padding:0 0 28px 28px}.phase::before{top:2px;left:-9px}.gallery{grid-template-columns:1fr 1fr}.gallery .wide{grid-column:1/-1}}
+
+/* team */
+.team{padding-block:clamp(56px,7vw,96px);border-top:1px solid var(--rule)}
+.people{margin-top:40px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px}
+.person .ph{aspect-ratio:4/5;background:var(--lait-2);display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:13px;letter-spacing:.08em;text-transform:uppercase}
+.person h3{margin-top:14px}
+.person p{margin-top:6px;font-size:15px}
+@media (max-width:760px){.people{grid-template-columns:1fr}.person .ph{aspect-ratio:16/9}}
+
+/* contact */
+.contact{background:var(--bleu-deep);color:var(--on-bleu);padding-block:clamp(64px,8vw,110px)}
+.contact h2{color:var(--on-bleu)}
+.contact .grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:56px}
+.contact .lede{color:var(--on-bleu-muted)}
+.contact ul.list{margin:24px 0 0;padding:0;list-style:none}
+.contact ul.list li{padding:12px 0;border-top:1px solid rgba(246,241,230,.2);color:var(--on-bleu-muted)}
+.contact ul.list li b{color:var(--on-bleu);font-weight:600}
+form{display:grid;gap:16px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+label{display:grid;gap:6px;font:600 12px var(--body);letter-spacing:.1em;text-transform:uppercase;color:var(--on-bleu-muted)}
+input,select,textarea{font:400 16px var(--body);color:var(--charbon);background:var(--lait);border:1px solid transparent;padding:12px;border-radius:0;width:100%}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--ocre);outline-offset:0}
+textarea{min-height:110px;resize:vertical}
+.err{color:#F3B27A;font-size:14px;min-height:1em}
+.done{border:1px solid var(--ocre);padding:18px;color:var(--on-bleu)}
+@media (max-width:860px){.contact .grid{grid-template-columns:1fr}.row2{grid-template-columns:1fr}}
+
+/* footer */
+footer{background:var(--bleu-deep);color:var(--on-bleu-muted);font-size:14px}
+.bands{display:grid;gap:7px;padding-top:8px}
+.bands i{display:block;height:7px;background:var(--bleu)}
+footer .wrap{display:flex;flex-wrap:wrap;gap:24px;justify-content:space-between;align-items:center;padding-block:28px}
+footer img{height:18px;width:auto}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="logo" href="#top" aria-label="Chanora"><img src="img/wm-reversed.png" alt="Chanora"></a>
+    <nav aria-label="Sections">
+      <a href="#ecart"><span lang="fr">L'opportunité</span><span lang="en">Opportunity</span></a>
+      <a href="#journee"><span lang="fr">Le modèle</span><span lang="en">The model</span></a>
+      <a href="#plan"><span lang="fr">Le plan</span><span lang="en">The plan</span></a>
+      <a href="#contact"><span lang="fr">Contact</span><span lang="en">Contact</span></a>
+    </nav>
+    <div class="lang" role="group" aria-label="Langue / Language">
+      <button type="button" id="lang-fr" aria-pressed="true">FR</button>
+      <button type="button" id="lang-en" aria-pressed="false">EN</button>
+    </div>
+    <a class="btn small" href="#contact"><span lang="fr">Dossier investisseur</span><span lang="en">Investor deck</span></a>
+  </div>
+</header>
+
+<main id="top">
+<section class="hero">
+  <div class="photo" role="img" aria-label="Concept image: a Chanora rider carrying milk cans at dawn"></div>
+  <div class="wrap inner">
+    <svg class="sun" viewBox="0 0 100 100" aria-hidden="true">
+      <defs><clipPath id="o"><circle cx="50" cy="50" r="48"/></clipPath></defs>
+      <g clip-path="url(#o)">
+        <rect class="rise" x="0" y="0" width="100" height="47" fill="#D9822B"/>
+        <rect class="band b1" x="0" y="52" width="100" height="11" fill="#F6F1E6"/>
+        <rect class="band b2" x="0" y="68" width="100" height="11" fill="#F6F1E6"/>
+        <rect class="band b3" x="0" y="84" width="100" height="16" fill="#F6F1E6"/>
+      </g>
+    </svg>
+    <h1>La force de la source.</h1>
+    <div class="horizon"></div>
+    <p class="sub" lang="fr">Nous construisons l'approvisionnement en lait du Sénégal à partir de la source : collecte, froid, transformation, et des éleveurs payés chaque semaine.</p>
+    <p class="sub" lang="en">Strength from the source. We are building Senegal's milk supply from the source: collection, cold chain, processing, and herders paid every week.</p>
+    <div class="actions">
+      <a class="btn" href="#contact"><span lang="fr">Demander le dossier investisseur</span><span lang="en">Request the investor deck</span> <span aria-hidden="true">→</span></a>
+      <a class="ghost" href="#journee"><span lang="fr">Voir comment ça marche</span><span lang="en">See how it works</span></a>
+    </div>
+  </div>
+  <span class="caption concept"><span lang="fr">Image de concept</span><span lang="en">Concept image</span></span>
+</section>
+
+<section class="gap" id="ecart">
+  <div class="wrap">
+    <div class="head">
+      <div>
+        <div class="label"><span lang="fr">L'opportunité</span><span lang="en">The opportunity</span></div>
+        <h2 lang="fr">Le Sénégal a du lait. Il lui manque la chaîne.</h2>
+        <h2 lang="en">Senegal has the milk. It lacks the chain.</h2>
+      </div>
+      <p class="lede" lang="fr">La plupart du lait local est consommé à la maison ou vendu sans froid. Les transformateurs comblent le manque avec de la poudre importée. Ce qui manque au milieu, c'est le froid, la logistique, l'aliment de saison sèche et un acheteur qui paie à l'heure.</p>
+      <p class="lede" lang="en">Most local milk is drunk at home or sold without refrigeration. Processors fill the gap with imported powder. What is missing in the middle is cold, logistics, dry-season feed and a buyer who pays on time.</p>
+    </div>
+    <div class="figs">
+      <div class="fig">
+        <div class="n">9<small> / 10</small></div>
+        <p lang="fr">litres de lait produits localement ne sont jamais transformés industriellement.</p>
+        <p lang="en">litres of locally produced milk are never processed industrially.</p>
+        <div class="src">IFCN, via Tetra Pak</div>
+      </div>
+      <div class="fig">
+        <div class="n">~300<small> M L</small></div>
+        <p lang="fr">de lait encore importés chaque année, surtout en poudre.</p>
+        <p lang="en">of milk still imported every year, mostly as powder.</p>
+        <div class="src">AllAfrica, août 2026</div>
+      </div>
+      <div class="fig">
+        <div class="n">288<small> M L</small></div>
+        <p lang="fr">produits par an, pour un besoin d'environ 1 milliard de litres.</p>
+        <p lang="en">produced a year, against a need of about 1 billion litres.</p>
+        <div class="src">Ministère de l'Élevage, via Dakaractu</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="day" id="journee">
+  <div class="wrap">
+    <div class="intro">
+      <div>
+        <div class="label"><span lang="fr">Le modèle, heure par heure</span><span lang="en">The model, hour by hour</span></div>
+        <h2 lang="fr">La journée d'un litre de lait Chanora.</h2>
+        <h2 lang="en">The day of a litre of Chanora milk.</h2>
+      </div>
+      <p class="lede" lang="fr">Voici comment chaque centre fonctionnera, de la traite au paiement. Les images sont des concepts : le premier centre ouvrira avec cette levée.</p>
+      <p class="lede" lang="en">This is how each centre will run, from milking to payment. The images are concepts: the first centre opens with this round.</p>
+    </div>
+    <div class="log">
+      <div class="step">
+        <div class="t">06:00<span lang="fr">Traite</span><span lang="en">Milking</span></div>
+        <div class="txt">
+          <h3 lang="fr">Le lait part de l'éleveur.</h3><h3 lang="en">Milk starts with the herder.</h3>
+          <p lang="fr">Les éleveurs livrent leur lait au centre ou à nos collecteurs, dans des bidons numérotés. Chaque bidon est tracé jusqu'à son propriétaire.</p>
+          <p lang="en">Herders bring their milk to the centre or hand it to our collectors, in numbered cans. Every can is traced to its owner.</p>
+          <span class="reading">CH-LG-0214</span>
+        </div>
+        <figure><img src="img/cans.jpg" alt="Numbered Chanora milk cans" loading="lazy"><figcaption class="concept"><span lang="fr">Image de concept</span><span lang="en">Concept image</span></figcaption></figure>
+      </div>
+      <div class="step">
+        <div class="t">07:30<span lang="fr">Centre de collecte</span><span lang="en">Collection centre</span></div>
+        <div class="txt">
+          <h3 lang="fr">Testé, pesé, refroidi.</h3><h3 lang="en">Tested, weighed, chilled.</h3>
+          <p lang="fr">Chaque livraison est analysée, pesée et enregistrée au nom de l'éleveur, puis refroidie à 4 °C dans un tank solaire.</p>
+          <p lang="en">Every delivery is tested, weighed and logged against the herder's name, then chilled to 4 °C in a solar-powered tank.</p>
+          <span class="reading">TANK 01 · 4.0 °C</span>
+        </div>
+        <figure><img src="img/tank.jpg" alt="Solar chilling tank at a Chanora collection centre" loading="lazy"><figcaption class="concept"><span lang="fr">Image de concept</span><span lang="en">Concept image</span></figcaption></figure>
+      </div>
+      <div class="step">
+        <div class="t">14:00<span lang="fr">Transport</span><span lang="en">Transport</span></div>
+        <div class="txt">
+          <h3 lang="fr">La chaîne du froid ne casse pas.</h3><h3 lang="en">The cold chain holds.</h3>
+          <p lang="fr">Un camion isotherme relie les centres à l'usine chaque jour. Le lait voyage froid, avec son numéro de lot et ses résultats d'analyse.</p>
+          <p lang="en">An insulated truck links the centres to the plant every day. Milk travels cold, with its lot number and test results.</p>
+        </div>
+        <figure><img src="img/truck.jpg" alt="Chanora insulated milk truck" loading="lazy"><figcaption class="concept"><span lang="fr">Image de concept</span><span lang="en">Concept image</span></figcaption></figure>
+      </div>
+      <div class="step">
+        <div class="t">17:00<span lang="fr">Usine</span><span lang="en">Plant</span></div>
+        <div class="txt">
+          <h3 lang="fr">Transformé dans les 48 heures.</h3><h3 lang="en">Processed within 48 hours.</h3>
+          <p lang="fr">À l'usine, le lait est analysé à réception, pasteurisé, puis transformé en lait frais, lait caillé, yaourt, lait sans lactose et diwu nior.</p>
+          <p lang="en">At the plant, milk is tested on arrival, pasteurised, then made into fresh milk, lait caillé, yoghurt, lactose-free milk and diwu nior.</p>
+          <span class="reading">LOT CH-0412 · 1.031</span>
+        </div>
+        <figure><img src="img/plant-in.jpg" alt="Inside the Chanora processing plant" loading="lazy"><figcaption class="concept"><span lang="fr">Image de concept</span><span lang="en">Concept image</span></figcaption></figure>
+      </div>
+      <div class="step">
+        <div class="t"><span lang="fr" style="font:inherit;color:inherit;letter-spacing:inherit;text-transform:none;margin:0;display:inline">Vendredi</span><span lang="en" style="font:inherit;color:inherit;letter-spacing:inherit;text-transform:none;margin:0;display:inline">Friday</span><span lang="fr">Paiement</span><span lang="en">Payment</span></div>
+        <div class="txt">
+          <h3 lang="fr">L'éleveur est payé, chaque semaine.</h3><h3 lang="en">The herder is paid, every week.</h3>
+          <p lang="fr">Le paiement arrive par mobile money, aliment bétail à crédit déduit. L'aliment augmente la production en saison sèche ; le remboursement passe par le lait.</p>
+          <p lang="en">Payment arrives by mobile money, with feed bought on credit deducted. Feed lifts dry-season yields; repayment comes out of the milk.</p>
+        </div>
+        <div class="sms" role="img" aria-label="Example payment message">
+          <div class="from">Chanora · <span lang="fr">exemple</span><span lang="en">example</span></div>
+          <p lang="fr">Votre paiement de la semaine a été envoyé. Jërëjëf !</p>
+          <p lang="en">Your payment for the week has been sent. Jërëjëf!</p>
+          <div class="line"><span lang="fr">Lait livré</span><span lang="en">Milk delivered</span><b>96 L</b></div>
+          <div class="line"><span lang="fr">Aliment à crédit</span><span lang="en">Feed on credit</span><b>− 8 000 FCFA</b></div>
+          <div class="line"><span lang="fr">Envoyé</span><span lang="en">Sent</span><b>20 800 FCFA</b></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="model" id="modele">
+  <div class="wrap">
+    <div class="label"><span lang="fr">Le modèle</span><span lang="en">The model</span></div>
+    <h2 lang="fr">L'opérateur à la source.</h2>
+    <h2 lang="en">The operator at the source.</h2>
+    <p class="lede" style="margin-top:18px" lang="fr">Chanora possède la collecte, le froid et la transformation. Ses produits atteignent les consommateurs par des marques partenaires dans lesquelles elle investit, et par les entreprises agroalimentaires.</p>
+    <p class="lede" style="margin-top:18px" lang="en">Chanora owns collection, cold chain and processing. Its products reach consumers through partner brands it invests in, and through food businesses.</p>
+    <div class="flow">
+      <div class="node">
+        <h3 lang="fr">Éleveurs</h3><h3 lang="en">Herders</h3>
+        <p lang="fr">Livrent le lait deux fois par jour. Payés chaque semaine, ils achètent l'aliment à crédit.</p>
+        <p lang="en">Deliver milk twice a day. Paid weekly; buy feed on credit.</p>
+      </div>
+      <div class="arrow" aria-hidden="true"><svg viewBox="0 0 40 16"><path d="M0 8H34M28 2l6 6-6 6" fill="none" stroke="#D9822B" stroke-width="2"/></svg></div>
+      <div class="node core">
+        <img src="img/wm-colour.png" alt="Chanora">
+        <ul>
+          <li lang="fr">Centres de collecte et de refroidissement solaires</li><li lang="en">Solar collection and chilling centres</li>
+          <li lang="fr">Usine de transformation</li><li lang="en">Processing plant</li>
+          <li lang="fr">Aliment bétail à crédit</li><li lang="en">Feed on credit</li>
+          <li lang="fr">Qualité et traçabilité, du troupeau au lot</li><li lang="en">Quality and traceability, herd to lot</li>
+        </ul>
+      </div>
+      <div class="arrow" aria-hidden="true"><svg viewBox="0 0 40 16"><path d="M0 8H34M28 2l6 6-6 6" fill="none" stroke="#D9822B" stroke-width="2"/></svg></div>
+      <div class="stack">
+        <div class="node"><h3 lang="fr">Marques partenaires</h3><h3 lang="en">Partner brands</h3><p lang="fr">Marques de consommation dans lesquelles Chanora investit.</p><p lang="en">Consumer brands Chanora invests in.</p></div>
+        <div class="node"><h3 lang="fr">Entreprises agroalimentaires</h3><h3 lang="en">Food businesses</h3><p lang="fr">Transformateurs, hôtels, boulangeries.</p><p lang="en">Processors, hotels, bakeries.</p></div>
+      </div>
+    </div>
+    <div class="loop">
+      <svg width="28" height="28" viewBox="0 0 28 28" aria-hidden="true"><path d="M22 9a10 10 0 1 0 2 7" fill="none" stroke="#D9822B" stroke-width="2"/><path d="M23 3v7h-7" fill="none" stroke="#D9822B" stroke-width="2"/></svg>
+      <p lang="fr"><b>La boucle aliment.</b> Plus d'aliment en saison sèche, plus de lait par vache, des centres pleins et un revenu plus stable pour les éleveurs.</p>
+      <p lang="en"><b>The feed loop.</b> More dry-season feed means more milk per cow, full centres and steadier income for herders.</p>
+    </div>
+  </div>
+</section>
+
+<section class="plan" id="plan">
+  <div class="wrap">
+    <div class="label"><span lang="fr">Le plan</span><span lang="en">The plan</span></div>
+    <h2 lang="fr">Un pilote, puis un réseau.</h2>
+    <h2 lang="en">A pilot, then a network.</h2>
+    <div class="phases">
+      <div class="phase now">
+        <div class="when"><span lang="fr">Maintenant · levée en cours</span><span lang="en">Now · raising</span></div>
+        <h3 lang="fr">Pilote</h3><h3 lang="en">Pilot</h3>
+        <ul lang="fr"><li>Deux centres de collecte solaires</li><li>Une laiterie pilote près de Dakar</li><li>Aliment à crédit pour les premiers éleveurs</li></ul>
+        <ul lang="en"><li>Two solar collection centres</li><li>A pilot dairy near Dakar</li><li>Feed on credit for the first herders</li></ul>
+      </div>
+      <div class="phase">
+        <div class="when"><span lang="fr">Ensuite</span><span lang="en">Next</span></div>
+        <h3 lang="fr">Montée en charge</h3><h3 lang="en">Scale-up</h3>
+        <ul lang="fr"><li>Nouveaux centres dans les zones d'élevage</li><li>Capacité de l'usine augmentée</li><li>Camion isotherme propre</li></ul>
+        <ul lang="en"><li>New centres in herding zones</li><li>More plant capacity</li><li>Our own insulated truck</li></ul>
+      </div>
+      <div class="phase">
+        <div class="when"><span lang="fr">Puis</span><span lang="en">Then</span></div>
+        <h3 lang="fr">Réseau</h3><h3 lang="en">Network</h3>
+        <ul lang="fr"><li>Un réseau de centres à travers les bassins laitiers</li><li>Nos propres blocs d'aliment</li><li>De nouvelles origines, le même modèle</li></ul>
+        <ul lang="en"><li>A network of centres across dairy regions</li><li>Our own feed blocks</li><li>New origins, same model</li></ul>
+      </div>
+    </div>
+    <div class="gallery">
+      <figure class="wide"><img src="img/plant-out.jpg" alt="Concept of the Chanora processing plant"></figure>
+      <figure><img src="img/lab.jpg" alt="Concept of quality testing at Chanora"></figure>
+      <figure><img src="img/feed.jpg" alt="Concept of Chanora livestock feed bags"></figure>
+    </div>
+    <p class="concept" style="margin-top:10px"><span lang="fr">Images de concept</span><span lang="en">Concept images</span></p>
+  </div>
+</section>
+
+
+<section class="contact" id="contact">
+  <div class="wrap grid">
+    <div>
+      <div class="label"><span lang="fr">Parlons de Chanora</span><span lang="en">Talk to us</span></div>
+      <h2 lang="fr">Demandez le dossier investisseur.</h2>
+      <h2 lang="en">Request the investor deck.</h2>
+      <p class="lede" style="margin-top:18px" lang="fr">Le dossier, le plan d'affaires et les détails de la levée sont partagés sur demande. Partenaires, futurs clients et coopératives d'éleveurs : écrivez-nous aussi.</p>
+      <p class="lede" style="margin-top:18px" lang="en">The deck, business plan and round details are shared on request. Partners, future clients and herder cooperatives: get in touch too.</p>
+      <ul class="list">
+        <li lang="fr"><b>Investisseurs</b> · dossier, plan et rencontre</li><li lang="en"><b>Investors</b> · deck, plan and a meeting</li>
+        <li lang="fr"><b>Partenaires de développement</b> · impact et co-financement</li><li lang="en"><b>Development partners</b> · impact and co-financing</li>
+        <li lang="fr"><b>Futurs clients</b> · approvisionnement et lettres d'intention</li><li lang="en"><b>Future clients</b> · supply and letters of intent</li>
+      </ul>
+    </div>
+    <div>
+      <form id="req" action="https://formsubmit.co/mo@chanora.co" method="POST" novalidate>
+        <input type="hidden" name="_subject" value="Chanora · nouvelle demande depuis le site">
+        <input type="hidden" name="_template" value="table">
+        <input type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px">
+        <div class="row2">
+          <label for="f-name"><span lang="fr">Nom</span><span lang="en">Name</span><input id="f-name" name="name" autocomplete="name" required></label>
+          <label for="f-org"><span lang="fr">Organisation</span><span lang="en">Organisation</span><input id="f-org" name="org" autocomplete="organization"></label>
+        </div>
+        <label for="f-email">E-mail<input id="f-email" name="email" type="email" autocomplete="email" required></label>
+        <label for="f-type"><span lang="fr">Vous êtes</span><span lang="en">You are</span>
+          <select id="f-type" name="type">
+            <option value="investor">Investisseur · Investor</option>
+            <option value="partner">Partenaire de développement · Development partner</option>
+            <option value="client">Futur client · Future client</option>
+            <option value="coop">Coopérative d'éleveurs · Herder cooperative</option>
+          </select>
+        </label>
+        <label for="f-msg">Message<textarea id="f-msg" name="msg"></textarea></label>
+        <p class="err" id="f-err" role="alert"></p>
+        <div><button class="btn" type="submit"><span lang="fr">Envoyer la demande</span><span lang="en">Send request</span></button></div>
+      </form>
+      <div class="done" id="f-done" hidden>
+        <p lang="fr"><b>Merci, votre demande est envoyée.</b> Nous vous répondons par e-mail.</p>
+        <p lang="en"><b>Thank you, your request has been sent.</b> We will reply by email.</p>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="bands" aria-hidden="true"><i></i><i></i><i></i></div>
+  <div class="wrap">
+    <img src="img/wm-reversed.png" alt="Chanora">
+    <span lang="fr">Collecte et transformation de lait · Sénégal</span><span lang="en">Milk collection and processing · Senegal</span>
+    <span class="concept" style="color:var(--on-bleu-muted)"><span lang="fr">Images de concept. Les objectifs sont des projections.</span><span lang="en">Concept images. Targets are projections.</span></span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var b=document.body, fr=document.getElementById('lang-fr'), en=document.getElementById('lang-en');
+  function set(l){ b.classList.toggle('en',l==='en'); document.documentElement.lang=l; fr.setAttribute('aria-pressed',l==='fr'); en.setAttribute('aria-pressed',l==='en'); try{localStorage.setItem('chanora-lang',l)}catch(e){} }
+  var saved=null; try{saved=localStorage.getItem('chanora-lang')}catch(e){}
+  set(saved==='en'?'en':'fr');
+  fr.addEventListener('click',function(){set('fr')}); en.addEventListener('click',function(){set('en')});
+  var f=document.getElementById('req'), err=document.getElementById('f-err');
+  f.addEventListener('input',function(){err.textContent=''});
+  f.addEventListener('submit',function(e){
+    e.preventDefault();
+    var isEn=b.classList.contains('en'), n=document.getElementById('f-name').value.trim(), m=document.getElementById('f-email').value.trim();
+    if(!n){err.textContent=isEn?'Enter your name.':'Indiquez votre nom.';return}
+    if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(m)){err.textContent=isEn?'Enter a valid email address.':'Indiquez une adresse e-mail valide.';return}
+    var btn=f.querySelector('button[type=submit]'); btn.disabled=true;
+    var data={}; new FormData(f).forEach(function(v,k){data[k]=v});
+    fetch('https://formsubmit.co/ajax/mo@chanora.co',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(data)})
+      .then(function(r){return r.json().then(function(j){if(!r.ok||String(j.success)!=='true')throw new Error(j.message||'error')})})
+      .then(function(){f.hidden=true;document.getElementById('f-done').hidden=false})
+      .catch(function(){btn.disabled=false;err.textContent=isEn?'The request could not be sent. Please try again, or email mo@chanora.co.':"La demande n'a pas pu être envoyée. Réessayez, ou écrivez à mo@chanora.co."});
+  });
+})();
+</script>
+</body>
+</html>
